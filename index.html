@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timetable Conflict Detector</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Timetable Conflict Detector</h1>
+    <p id="summary" class="muted"></p>
+  </div>
+  <nav id="tabs" aria-label="Timetable sections">
+    <button data-tab="timetable" class="active">Timetable</button>
+    <button data-tab="add">Add lecture</button>
+    <button data-tab="teachers">Teachers</button>
+    <button data-tab="conflicts">Conflicts <span id="conflictBadge" class="badge">0</span></button>
+    <button data-tab="free">Free slots</button>
+  </nav>
+</header>
+
+<main>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- TIMETABLE -->
+  <section id="timetable" class="panel active">
+    <div class="toolbar">
+      <label>View by
+        <select id="viewType">
+          <option value="all">Everything</option>
+          <option value="studentGroup">Student group</option>
+          <option value="teacher">Teacher</option>
+          <option value="classroom">Classroom</option>
+          <option value="subject">Subject</option>
+        </select>
+      </label>
+      <label id="viewValueWrap" hidden>Name
+        <select id="viewValue"></select>
+      </label>
+      <button id="resetBtn" class="ghost">Reset to sample data</button>
+    </div>
+    <div class="grid-wrap"><table id="grid"></table></div>
+    <p class="muted legend"><span class="dot clash"></span> Red outline = this lecture clashes with another one.</p>
+  </section>
+
+  <!-- ADD LECTURE -->
+  <section id="add" class="panel">
+    <h2>Add a lecture</h2>
+    <form id="lectureForm" class="form" autocomplete="off">
+      <label>Student group <input id="fGroup" list="groupList" placeholder="CSE-A" required></label>
+      <label>Teacher <select id="fTeacher" required></select></label>
+      <label>Subject <input id="fSubject" list="subjectList" placeholder="Java" required></label>
+      <label>Classroom <input id="fRoom" list="roomList" placeholder="Room 101" required></label>
+      <label>Day <select id="fDay" required></select></label>
+      <label>Start <input id="fStart" type="time" min="09:00" max="17:00" value="09:00" required></label>
+      <label>End <input id="fEnd" type="time" min="09:00" max="17:00" value="10:00" required></label>
+      <div class="form-actions">
+        <button type="submit">Add lecture</button>
+        <span id="formMsg" class="form-msg" role="status"></span>
+      </div>
+    </form>
+    <datalist id="groupList"></datalist>
+    <datalist id="subjectList"></datalist>
+    <datalist id="roomList"></datalist>
+    <p class="muted">A lecture that clashes with an existing one (same teacher, room or group at the same time) is rejected, and the clash is explained.</p>
+  </section>
+
+  <!-- TEACHERS -->
+  <section id="teachers" class="panel">
+    <h2>Teachers</h2>
+    <form id="teacherForm" class="inline-form">
+      <input aria-label="Teacher name" id="tName" placeholder="Teacher name, e.g. Dr. Kaur" required>
+      <button type="submit">Add teacher</button>
+    </form>
+    <ul id="teacherList" class="cards"></ul>
+  </section>
+
+  <!-- CONFLICTS -->
+  <section id="conflicts" class="panel">
+    <h2>Conflict report</h2>
+    <div id="conflictList"></div>
+  </section>
+
+  <!-- FREE SLOTS -->
+  <section id="free" class="panel">
+    <h2>Free one-hour slots</h2>
+    <div class="toolbar">
+      <label>Find for
+        <select id="freeType">
+          <option value="teacher">Teacher</option>
+          <option value="classroom">Classroom</option>
+        </select>
+      </label>
+      <label>Name <select id="freeName"></select></label>
+    </div>
+    <div id="freeResult" class="free-grid"></div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
