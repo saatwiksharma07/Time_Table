@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.time.LocalTime;
 import java.util.*;
 
-/** Local browser interface. All scheduling decisions are made by the Java model. */
+/** Browser interface. All scheduling decisions are made by the Java model. */
 public class WebServer {
     private static TimetableManager manager = new TimetableManager();
     private static final Map<Integer, Lecture> ids = new LinkedHashMap<>();
@@ -17,10 +17,14 @@ public class WebServer {
 
     public static void start() throws IOException {
         reset();
-        HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 8765), 0);
+        // Keep local development private; cloud hosts provide PORT.
+        String cloudPort = System.getenv("PORT");
+        int port = cloudPort == null ? 8765 : Integer.parseInt(cloudPort);
+        String host = cloudPort == null ? "127.0.0.1" : "0.0.0.0";
+        HttpServer server = HttpServer.create(new InetSocketAddress(host, port), 0);
         server.createContext("/", WebServer::handle);
         server.start();
-        System.out.println("Open http://127.0.0.1:8765 in your browser. Ctrl+C to stop.");
+        System.out.println("Server listening on " + host + ":" + port + ". Ctrl+C to stop.");
     }
 
     private static void reset() {
