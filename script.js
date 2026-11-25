@@ -37,15 +37,10 @@ function fillSelect(sel, values, keep) {
 function renderAll() {
   const conflicts = state.conflicts;
   $("summary").textContent = `${state.lectures.length} lectures · ${state.teachers.length} teachers`;
-  const badge = $("conflictBadge");
-  badge.textContent = conflicts.length;
-  badge.classList.toggle("bad", conflicts.length > 0);
-
   renderViewFilter();
   renderGrid(conflicts);
   renderFormLists();
   renderTeachers();
-  renderConflicts(conflicts);
   renderFree();
 }
 
@@ -93,13 +88,6 @@ function renderTeachers() {
     return `<li><span>${esc(t)}<small>${n} lecture${n === 1 ? "" : "s"}</small></span>
       <button class="danger" data-rm-teacher="${esc(t)}">Remove</button></li>`;
   }).join("");
-}
-
-function renderConflicts(conflicts) {
-  const box = $("conflictList");
-  if (!conflicts.length) { box.innerHTML = "<div class='all-clear'>No conflicts detected. Timetable is clear!</div>"; return; }
-  const line = l => `<p><b>${esc(l.subject)}</b> · ${esc(l.studentGroup)} · ${esc(l.teacher)} · ${esc(l.classroom)} · ${esc(l.day)} ${esc(l.start)}–${esc(l.end)}</p>`;
-  box.innerHTML = conflicts.map(c => `<div class="conflict"><h3>${esc(c.reason)} conflict</h3>${line(c.a)}${line(c.b)}</div>`).join("");
 }
 
 let freeRequest = 0;

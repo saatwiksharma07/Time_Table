@@ -31,11 +31,6 @@ nav button {
 }
 nav button:hover { color: var(--ink); }
 nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
-.badge {
-  display: inline-block; min-width: 1.4em; padding: 0 .4em; border-radius: 1em; text-align: center;
-  background: var(--ok); color: #fff; font-size: .75rem;
-}
-.badge.bad { background: var(--clash); }
 
 main { max-width: 1200px; margin: 0 auto; padding: 1.4rem 1.6rem 3rem; }
 .panel { display: none; }
@@ -96,14 +91,6 @@ input, select {
 .cards li { display: flex; justify-content: space-between; align-items: center; gap: .6rem; background: var(--card);
   border: 1px solid var(--line); border-radius: var(--radius); padding: .7rem .9rem; }
 .cards small { color: var(--muted); display: block; }
-
-/* conflicts */
-.conflict { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--clash);
-  border-radius: var(--radius); padding: .8rem 1rem; margin-bottom: .8rem; }
-.conflict h3 { margin: 0 0 .4rem; font-size: 1rem; color: var(--clash); }
-.conflict p { margin: .15rem 0; }
-.all-clear { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--ok);
-  border-radius: var(--radius); padding: 1rem; font-weight: 600; }
 
 /* free slots */
 .free-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .8rem; }
